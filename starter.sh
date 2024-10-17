@@ -2,6 +2,6 @@
 
 source ./bin/activate
 
-clear && python3.12 galgenraten.py
+clear && python3.12 main.py
 
 deactivate

@@ -1,87 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 
-gallows = [
-    """
-    """,
-    """
-     ___    
-    /   \\
-    """,
-    """
-      |
-      |
-      |
-     _|_    
-    /   \\
-    """,
-    """
-      +----- 
-      |
-      |
-      |
-     _|_    
-    /   \\
-    """,
-    """
-      +-+--- 
-      |/
-      |
-      |
-     _|_    
-    /   \\
-    """,
-    """
-      +-+---+ 
-      |/    O
-      |
-      |
-     _|_    
-    /   \\
-    """,
-    """
-      +-+---+ 
-      |/    O
-      |     |
-      |     |
-     _|_    
-    /   \\
-    """,
-    """
-      +-+---+ 
-      |/    O
-      |    \\|
-      |     |
-     _|_    
-    /   \\
-    """,
-    """
-      +-+---+ 
-      |/    O
-      |    \\|/
-      |     |
-     _|_    
-    /   \\
-    """,
-    """
-      +-+---+ 
-      |/    O
-      |    \\|/
-      |     |
-     _|_   / 
-    /   \\
-    """,
-    """
-      +-+---+ 
-      |/    O
-      |    \\|/
-      |     |
-     _|_   / \\
-    /   \\
-    """,
-
-]
-
 def get_random_word():
     url = "https://de.wiktionary.org/wiki/Spezial:Zuf%C3%A4llig_in_Kategorie/Wiktionary:Beispiele_fehlen_(Deutsch)"
     response = requests.get(url)
@@ -122,7 +41,7 @@ def ask_for_letter(word, guessed_letters):
 def is_finished(word, guessed_letters):
     return all(char.lower() in guessed_letters for char in word)
 
-def handle_gallows(word, guessed_letters, num_wrong_guesses, success):
+def handle_gallows(word, guessed_letters, num_wrong_guesses, success, gallows):
         if success:
             print("Richtig")
         else:
@@ -130,32 +49,5 @@ def handle_gallows(word, guessed_letters, num_wrong_guesses, success):
             print("Falsch")
         print(gallows[num_wrong_guesses])
         return num_wrong_guesses, is_finished(word, guessed_letters)
-
-
-def main():
-    guessed_letters = []
-    finished = False
-    num_wrong_guesses = 0
-    word, meanings = get_random_word()
-    while not finished and num_wrong_guesses < len(gallows)-1:
-        print_word(word, guessed_letters)
-        guessed_letters, success = ask_for_letter(word, guessed_letters)
-        num_wrong_guesses, finished = handle_gallows(word, guessed_letters, num_wrong_guesses, success)
-        
-        # print("Fehlversuche:", num_wrong_guesses)
-        # print("Fertig:", finished)
-
-    if finished: 
-        print("Gewonnen!")
-    else:
-        print("Verloren!")
-    print("Das gesuchte Wort war:", word)
-    print("Seine Bedeutung:")
-    for meaning in meanings:
-        print(meaning)
-
-
-if __name__ == "__main__":
-    main()
 
  
